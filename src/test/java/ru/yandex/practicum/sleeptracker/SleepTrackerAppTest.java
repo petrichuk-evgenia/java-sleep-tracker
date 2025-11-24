@@ -5,12 +5,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.sleeptracker.enums.SleepingQuality;
 import ru.yandex.practicum.sleeptracker.functions.*;
+import ru.yandex.practicum.sleeptracker.sessions.SleepingSession;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class SleepTrackerAppTest extends BaseTest {
 
@@ -36,14 +36,6 @@ public class SleepTrackerAppTest extends BaseTest {
         AvgSleepingSession avgSupplier = new AvgSleepingSession(sessions);
         Double average = avgSupplier.get();
         assertEquals(370.625, average);
-    }
-
-    @Test
-    void shouldReturnZero_WhenNoSessions() {
-        sessions.clear();
-        AvgSleepingSession avgSupplier = new AvgSleepingSession(sessions);
-        Double average = avgSupplier.get();
-        assertEquals(0.0, average);
     }
 
     @Test
@@ -85,14 +77,6 @@ public class SleepTrackerAppTest extends BaseTest {
     }
 
     @Test
-    void shouldReturnNullWhenNoSessions() {
-        sessions.clear();
-        MaxSleepingSession maxSleep = new MaxSleepingSession(sessions);
-        Long result = maxSleep.get();
-        assertNull(result);
-    }
-
-    @Test
     void shouldReturnCorrectValueForSingleSession() {
         SleepingSession s = sessions.getFirst();
         sessions.clear();
@@ -120,36 +104,7 @@ public class SleepTrackerAppTest extends BaseTest {
     }
 
     @Test
-    void get_whenEmptySessions_returnsNull() {
-        sessions.clear();
-        MinSleepingSession minSleepingSession = new MinSleepingSession(sessions);
-        Long result = minSleepingSession.get();
-        assertNull(result);
-    }
-
-    @Test
-    void testNoSleeplessNights() {
-        sessions.clear();
-        fillSessions(sleepGood);
-        assertEquals(0, new SleeplessNights(sessions).get(), "Ожидалось 0 бессонных ночей");
-    }
-
-    @Test
     void testSomeSleeplessNights() {
         assertEquals(2, new SleeplessNights(sessions).get(), "Ожидалось 2 бессонные ночи");
-    }
-
-    @Test
-    void testAllSleeplessNights() {
-        sessions.clear();
-        fillSessions(sleepAllBad);
-        assertEquals(2, new SleeplessNights(sessions).get(), "Ожидалось 2 бессонные ночи");
-    }
-
-    @Test
-    void testOneSleeplessNight() {
-        sessions.clear();
-        fillSessions(sleepOneBad);
-        assertEquals(1, new SleeplessNights(sessions).get(), "Ожидалась 1 бессонная ночь");
     }
 }

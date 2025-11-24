@@ -1,6 +1,6 @@
 package ru.yandex.practicum.sleeptracker.functions;
 
-import ru.yandex.practicum.sleeptracker.SleepingSession;
+import ru.yandex.practicum.sleeptracker.sessions.SleepingSession;
 
 import java.util.LinkedHashSet;
 import java.util.function.Supplier;

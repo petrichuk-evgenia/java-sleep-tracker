@@ -1,27 +1,27 @@
 package ru.yandex.practicum.sleeptracker;
 
 import ru.yandex.practicum.sleeptracker.functions.*;
+import ru.yandex.practicum.sleeptracker.sessions.SleepingSession;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashSet;
 import java.util.List;
+
+import static ru.yandex.practicum.sleeptracker.sessions.SleepingConstants.dateTimeFormatter;
 
 public class SleepTrackerApp {
 
     public static final LinkedHashSet<SleepingSession> sleepingSessions = new LinkedHashSet<>();
-    public static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
 
     public static void main(String[] args) {
 
-        //String fileName = args[0];
-        String fileName = "src/main/resources/sleep_log.txt";
+        String fileName = args[0];
+        //String fileName = "src/main/resources/sleep_log.txt";
         fillSleepingSessions(fileName);
-
 
         LocalDateTime from = LocalDateTime.parse("01.10.25 23:50", dateTimeFormatter);
         LocalDateTime to = LocalDateTime.parse("11.10.25 06:10", dateTimeFormatter);

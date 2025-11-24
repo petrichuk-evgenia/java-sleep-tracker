@@ -1,6 +1,5 @@
 package ru.yandex.practicum.sleeptracker;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.sleeptracker.enums.ChronoTypes;
 import ru.yandex.practicum.sleeptracker.functions.ChronoType;
@@ -9,14 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ChronoTypeTest extends BaseTest {
 
-    final String owl = "src/main/resources/sleep_owl.txt";
-    final String lark = "src/main/resources/sleep_lark.txt";
-    final String pigeon = "src/main/resources/sleep_pigeon.txt";
-
-    @BeforeEach
-    void setUp() {
-        sessions.clear();
-    }
+    private final String owl = "src/main/resources/sleep_owl.txt";
+    private final String lark = "src/main/resources/sleep_lark.txt";
+    private final String pigeon = "src/main/resources/sleep_pigeon.txt";
+    private final String pigeonAllSessions = "src/main/resources/sleep_pigeon_all_sessions.txt";
 
     @Test
     void shouldReturnOWL() {
@@ -33,6 +28,12 @@ class ChronoTypeTest extends BaseTest {
     @Test
     void shouldReturnPIGEON() {
         fillSessions(pigeon);
+        assertEquals(ChronoTypes.PIGEON, new ChronoType(sessions).get());
+    }
+
+    @Test
+    void shouldReturnPIGEON_All() {
+        fillSessions(pigeonAllSessions);
         assertEquals(ChronoTypes.PIGEON, new ChronoType(sessions).get());
     }
 }

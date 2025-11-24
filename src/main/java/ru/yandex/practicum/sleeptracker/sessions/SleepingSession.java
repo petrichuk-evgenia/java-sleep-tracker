@@ -1,10 +1,10 @@
-package ru.yandex.practicum.sleeptracker;
+package ru.yandex.practicum.sleeptracker.sessions;
 
 import ru.yandex.practicum.sleeptracker.enums.SleepingQuality;
 
 import java.time.LocalDateTime;
 
-import static ru.yandex.practicum.sleeptracker.SleepTrackerApp.dateTimeFormatter;
+import static ru.yandex.practicum.sleeptracker.sessions.SleepingConstants.dateTimeFormatter;
 
 public class SleepingSession {
 
