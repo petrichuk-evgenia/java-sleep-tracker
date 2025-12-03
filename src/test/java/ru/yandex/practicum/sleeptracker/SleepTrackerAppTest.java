@@ -15,31 +15,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SleepTrackerAppTest extends BaseTest {
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         fillSessions(fileName);
     }
 
     @Test
-    void shouldReturnZeroWhenNoSessionsInRange() {
+    public void shouldReturnZeroWhenNoSessionsInRange() {
         Long result = new SleepingSessionsForPeriod(sessions).apply(from2, to2);
         assertEquals(0L, result);
     }
 
     @Test
-    void shouldIncludeSessionsOnBoundary() {
+    public void shouldIncludeSessionsOnBoundary() {
         Long result = new SleepingSessionsForPeriod(sessions).apply(from1, to1);
         assertEquals(10, result);
     }
 
     @Test
-    void shouldReturnAverageDuration_WhenSessionsExist() {
+    public void shouldReturnAverageDuration_WhenSessionsExist() {
         AvgSleepingSession avgSupplier = new AvgSleepingSession(sessions);
         Double average = avgSupplier.get();
         assertEquals(370.625, average);
     }
 
     @Test
-    void shouldReturnExactDuration_WhenOneSession() {
+    public void shouldReturnExactDuration_WhenOneSession() {
         SleepingSession s = sessions.getFirst();
         sessions.clear();
         sessions.add(s);
@@ -49,12 +49,12 @@ public class SleepTrackerAppTest extends BaseTest {
     }
 
     @Test
-    void get_shouldReturnCountOfBadQualitySessions() {
+    public void get_shouldReturnCountOfBadQualitySessions() {
         assertEquals(2L, new BadQualitySleepingSession(sessions).get(), "Должно быть 2 сессии со сном плохого качества");
     }
 
     @Test
-    void get_whenNoBadSessions_shouldReturnZero() {
+    public void get_whenNoBadSessions_shouldReturnZero() {
         List<SleepingSession> s = sessions.stream()
                 .filter(sleepingSession -> !sleepingSession.quality.equals(SleepingQuality.BAD))
                 .collect(Collectors.toList());
@@ -62,7 +62,7 @@ public class SleepTrackerAppTest extends BaseTest {
     }
 
     @Test
-    void get_whenAllSessionsAreBad_shouldReturnTotalCount() {
+    public void get_whenAllSessionsAreBad_shouldReturnTotalCount() {
         List<SleepingSession> s = sessions.stream()
                 .filter(sleepingSession -> sleepingSession.quality.equals(SleepingQuality.BAD))
                 .collect(Collectors.toList());
@@ -71,13 +71,13 @@ public class SleepTrackerAppTest extends BaseTest {
     }
 
     @Test
-    void shouldReturnMaxDurationWhenSessionsArePresent() {
+    public void shouldReturnMaxDurationWhenSessionsArePresent() {
         Long result = new MaxSleepingSession(sessions).get();
         assertEquals(650, result); // 10 часов = 600 минут
     }
 
     @Test
-    void shouldReturnCorrectValueForSingleSession() {
+    public void shouldReturnCorrectValueForSingleSession() {
         SleepingSession s = sessions.getFirst();
         sessions.clear();
         sessions.add(s);
@@ -87,14 +87,14 @@ public class SleepTrackerAppTest extends BaseTest {
     }
 
     @Test
-    void get_whenSessionsExist_returnsMinDurationInMinutes() {
+    public void get_whenSessionsExist_returnsMinDurationInMinutes() {
         MinSleepingSession minSleepingSession = new MinSleepingSession(sessions);
         Long result = minSleepingSession.get();
         assertEquals(45L, result);
     }
 
     @Test
-    void get_whenSingleSession_returnsItsDuration() {
+    public void get_whenSingleSession_returnsItsDuration() {
         SleepingSession s = sessions.getFirst();
         sessions.clear();
         sessions.add(s);
@@ -104,7 +104,7 @@ public class SleepTrackerAppTest extends BaseTest {
     }
 
     @Test
-    void testSomeSleeplessNights() {
+    public void testSomeSleeplessNights() {
         assertEquals(2, new SleeplessNights(sessions).get(), "Ожидалось 2 бессонные ночи");
     }
 }

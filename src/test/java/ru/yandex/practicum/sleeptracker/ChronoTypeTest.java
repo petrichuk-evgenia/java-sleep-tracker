@@ -14,25 +14,25 @@ class ChronoTypeTest extends BaseTest {
     private final String pigeonAllSessions = "src/main/resources/sleep_pigeon_all_sessions.txt";
 
     @Test
-    void shouldReturnOWL() {
+    public void shouldReturnOWL() {
         fillSessions(owl);
         assertEquals(ChronoTypes.OWL, new ChronoType(sessions).get());
     }
 
     @Test
-    void shouldReturnLARK() {
+    public void shouldReturnLARK() {
         fillSessions(lark);
         assertEquals(ChronoTypes.LARK, new ChronoType(sessions).get());
     }
 
     @Test
-    void shouldReturnPIGEON() {
+    public void shouldReturnPIGEON() {
         fillSessions(pigeon);
         assertEquals(ChronoTypes.PIGEON, new ChronoType(sessions).get());
     }
 
     @Test
-    void shouldReturnPIGEON_All() {
+    public void shouldReturnPIGEON_All() {
         fillSessions(pigeonAllSessions);
         assertEquals(ChronoTypes.PIGEON, new ChronoType(sessions).get());
     }

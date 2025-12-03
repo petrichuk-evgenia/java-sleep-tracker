@@ -30,7 +30,7 @@ public class BaseTest {
     protected LinkedHashSet<SleepingSession> sessions = new LinkedHashSet<>();
 
     @BeforeEach
-    void setUp() {
+    protected void setUp() {
         sessions.clear();
     }
 
