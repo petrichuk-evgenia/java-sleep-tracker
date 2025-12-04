@@ -63,14 +63,14 @@ public class SleepTrackerAppTestClearBeforeTest extends BaseTest {
     @Test
     public void shouldIncludeSessionsOnFirstSessionAfterMidnight() {
         fillSessions(fileName2);
-        Long result = new SleepingSessionsForPeriod(sessions).apply(from3, to3);
+        Long result = new SleepingSessionsForPeriod(sessions, from3, to3).get();
         assertEquals(11, result);
     }
 
     @Test
     public void shouldIncludeSessionsOnBoundaryFromMain() {
         fillSessions(fileName3);
-        Long result = new SleepingSessionsForPeriod(sessions).apply(from1, to1);
+        Long result = new SleepingSessionsForPeriod(sessions, from1, to1).get();
         assertEquals(10, result);
     }
 }

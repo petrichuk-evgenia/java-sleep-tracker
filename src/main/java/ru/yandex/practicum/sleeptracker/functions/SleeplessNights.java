@@ -15,4 +15,9 @@ public class SleeplessNights extends Sleeping implements Supplier<Integer> {
     public Integer get() {
         return sleeplessNights().size();
     }
+
+    @Override
+    public String toString() {
+        return String.format("Количество бессонных ночей: %d", get());
+    }
 }

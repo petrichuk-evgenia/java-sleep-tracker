@@ -21,4 +21,9 @@ public class MaxSleepingSession implements Supplier<Long> {
                 .max(Long::compare)
                 .orElse(null);
     }
+
+    @Override
+    public String toString() {
+        return String.format("Максимальная продолжительность сессии: %d минут", get());
+    }
 }

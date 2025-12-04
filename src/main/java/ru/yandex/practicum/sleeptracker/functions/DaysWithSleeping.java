@@ -15,4 +15,9 @@ public class DaysWithSleeping extends Sleeping implements Supplier<Integer> {
     public Integer get() {
         return sleepingDays().size();
     }
+
+    @Override
+    public String toString() {
+        return String.format("Количество дневных сессий сна: %d", get());
+    }
 }

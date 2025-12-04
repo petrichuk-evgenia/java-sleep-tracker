@@ -21,13 +21,13 @@ public class SleepTrackerAppTest extends BaseTest {
 
     @Test
     public void shouldReturnZeroWhenNoSessionsInRange() {
-        Long result = new SleepingSessionsForPeriod(sessions).apply(from2, to2);
+        Long result = new SleepingSessionsForPeriod(sessions, from2, to2).get();
         assertEquals(0L, result);
     }
 
     @Test
     public void shouldIncludeSessionsOnBoundary() {
-        Long result = new SleepingSessionsForPeriod(sessions).apply(from1, to1);
+        Long result = new SleepingSessionsForPeriod(sessions, from1, to1).get();
         assertEquals(10, result);
     }
 

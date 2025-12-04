@@ -21,4 +21,9 @@ public class AvgSleepingSession implements Supplier<Double> {
                 .average()
                 .orElse(0.0);
     }
+
+    @Override
+    public String toString() {
+        return String.format("Средняя продолжительность сессии: %s минут", get());
+    }
 }

@@ -54,4 +54,10 @@ public class ChronoType extends Sleeping implements Supplier<ChronoTypes> {
             return ChronoTypes.PIGEON;
         }
     }
+
+
+    @Override
+    public String toString() {
+        return String.format("Хронотип пользователя: %s", get());
+    }
 }

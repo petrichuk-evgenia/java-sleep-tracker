@@ -20,4 +20,9 @@ public class BadQualitySleepingSession implements Supplier<Long> {
                 .filter(sleepingSession -> sleepingSession.quality.equals(SleepingQuality.BAD))
                 .count();
     }
+
+    @Override
+    public String toString() {
+        return String.format("Количество сессий с плохим качеством сна: %d", get());
+    }
 }

@@ -8,53 +8,46 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static ru.yandex.practicum.sleeptracker.sessions.SleepingConstants.dateTimeFormatter;
 
-public class SleepTrackerApp {
-
-    public static final LinkedHashSet<SleepingSession> sleepingSessions = new LinkedHashSet<>();
+public class SleepTrackerApp<T> {
 
     public static void main(String[] args) {
 
         String fileName = args[0];
         //String fileName = "src/main/resources/sleep_log.txt";
-        fillSleepingSessions(fileName);
-
         LocalDateTime from = LocalDateTime.parse("01.10.25 23:50", dateTimeFormatter);
         LocalDateTime to = LocalDateTime.parse("11.10.25 06:10", dateTimeFormatter);
 
+        LinkedHashSet<SleepingSession> sleepingSessions = fillSleepingSessions(fileName);
+
+        List<Supplier> functions = new ArrayList<>();
+        functions.add(new SleepingSessionsForPeriod(sleepingSessions, from, to));
+        functions.add(new MinSleepingSession(sleepingSessions));
+        functions.add(new MaxSleepingSession(sleepingSessions));
+        functions.add(new AvgSleepingSession(sleepingSessions));
+        functions.add(new BadQualitySleepingSession(sleepingSessions));
+        functions.add(new SleeplessNights(sleepingSessions));
+        functions.add(new DaysWithSleeping(sleepingSessions));
+        functions.add(new ChronoType(sleepingSessions));
+
         System.out.println("Демонстрация");
-        System.out.println(String.format("Количество сессий за период %s - %s : %d",
-                from.format(dateTimeFormatter), to.format(dateTimeFormatter),
-                new SleepingSessionsForPeriod(sleepingSessions).apply(from, to)));
-
-        System.out.println(String.format("Минимальная продолжительность сессии: %d минут",
-                new MinSleepingSession(sleepingSessions).get()));
-
-        System.out.println(String.format("Максимальная продплжительность сессии: %d минут",
-                new MaxSleepingSession(sleepingSessions).get()));
-
-        System.out.println(String.format("Средняя продплжительность сессии: %s минут",
-                new AvgSleepingSession(sleepingSessions).get()));
-
-        System.out.println(String.format("Количество сессий с плохим качеством сна: %d",
-                new BadQualitySleepingSession(sleepingSessions).get()));
-
-        System.out.println(String.format("Количество бессонных ночей: %d",
-                new SleeplessNights(sleepingSessions).get()));
-
-        System.out.println(String.format("Количество дневных сессий сна: %d",
-                new DaysWithSleeping(sleepingSessions).get()));
-
-        System.out.println(String.format("Хронотип пользователя: %s",
-                new ChronoType(sleepingSessions).get().toString()));
+        functions.forEach(function -> System.out.println(function.toString()));
 
     }
 
-    private static void fillSleepingSessions(String fileName) {
+    /*
+     * LinkedHashSet взят потому, чтоб при возможном задвоении записей в файле не создавать дубли сессий в "списке"
+     * Отсев подобных ситуаций предпочитаю делать штатными средствами, а не самописными функциями
+     * Linked тоже потому, что важен порядок добавления
+     */
+    private static LinkedHashSet<SleepingSession> fillSleepingSessions(String fileName) {
+        LinkedHashSet<SleepingSession> sleepingSessions = new LinkedHashSet<>();
         try {
             List<String> lines = Files.readAllLines(Paths.get(fileName));
             lines.forEach(session -> {
@@ -70,5 +63,7 @@ public class SleepTrackerApp {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return sleepingSessions;
     }
+
 }

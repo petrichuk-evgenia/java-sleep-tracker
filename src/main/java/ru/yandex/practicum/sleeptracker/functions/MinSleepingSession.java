@@ -21,4 +21,9 @@ public class MinSleepingSession implements Supplier<Long> {
                 .min(Long::compare)
                 .orElse(null);
     }
+
+    @Override
+    public String toString() {
+        return String.format("Минимальная продолжительность сессии: %d минут", get());
+    }
 }
